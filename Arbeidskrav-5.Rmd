@@ -3,6 +3,7 @@ title: "arbeidskrav 5"
 author: "Hermann moen"
 date: "21 11 2021"
 output:
+  word_document: default
   pdf_document: default
   html_document: default
 editor_options:
@@ -21,9 +22,17 @@ Treningsvolum og den tilknyttede dose-reponsen er således interesant for å øk
 
 ## Metode
 
-## Deltakere
+## Deltakere og studieoversikt
 
 Deltakerne i denne studien bestod av ikke røykende kvinner og menn mellom 18 og 40år. Deltakeren kunne ikke ha trent styrke oftere enn en gang per uke de siste 12 månedene, være inntolerante til lokalbeøvelse, ha en skade som påvirket muskelstyrke negativt, eller ta reseptbelagte legemidler som kan påvirke adaptasjonene til treningen. 7 deltakere som startet på studien kunne ikke gjennomføre tilstrekkelig, og ble ekskludert se tabel 1.
+
+I denne studiene ble deltakerne testet i pre og post for styrke, og forskjllige mål på muskelvekst.Testene for styrke var isokinetsik og isometrisk unilateral kneekstensjon, og unilateral beinpress. Målene for muskelvekst var tversnittsareal av vastus lateralis, medialis, intermedius, og rectus femoris målt med MRI, og måling av kroppsmassesammensetning gjort med DEXA-scan.
+
+## Databehandling
+All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt(standard avvik). 
+
+All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: https://github.com/Hermannm99/arbeidskrav-5 
+
 
 ```{r}
 library(tidyverse)
@@ -31,44 +40,39 @@ library(exscidata)
 library(knitr)
 library(kableExtra)
 library(flextable)
-dxadata %>% # take the dxadata data set
+dxadata %>% 
   select(participant, time, sex, include:weight, fat.whole) %>% 
-  # select participant, time, sex, include to height and fat.whole
-  
-  # Filter to keep all observations with pre
+ 
   filter(time == "pre") %>%
   
-  # Calculate body fat
-  # fat.whole in grams, needs to be divided by 1000 to express as kg
-  # Multiply by 100 to get percentage
   mutate(fat.whole = ((fat.whole/1000) / weight) * 100) %>%
   
-  # Group the data frame and add a variable specifying the number of observations per group
+ 
   group_by(include, sex) %>%
   mutate(n = n()) %>%
-  # Collect all variables for convenient summarizing
+ 
   pivot_longer(names_to = "variable", 
                values_to = "value", 
                cols = age:n) %>%
-  # Create a new grouping, adding variable
+  
   group_by(include, sex, variable) %>%
-  # Summarize in two new variables m for mean and s for SD
+  
   summarise(m = mean(value), 
             s = sd(value)) %>%
-  # Add descriptive statistics together for nice formatting
-  mutate(ms = if_else(variable == "n", # If the variable is n
-                      as.character(m), # the only display the mean, otherwise:
-                        paste0(signif(m, 3), # Use signif to round to significant numbers
+  
+  mutate(ms = if_else(variable == "n", 
+                      as.character(m), 
+                        paste0(signif(m, 3),
                         " (",
                         signif(s, 3), 
                         ")")), 
-         # Doing a new grouping variable
+         
          include_sex = paste(include, sex, sep = "_")) %>%
-  # removing unnecessary variables after ungrouping
+
   ungroup() %>%
 
   select(-sex, -include, -m, -s) %>%
-  # pivot wider to match the desired data
+
   pivot_wider(names_from = include_sex, 
               values_from = ms) %>%
     mutate(variable = factor(variable, levels = c("n", "age", "weight", "height", "fat.whole"), 
@@ -83,17 +87,14 @@ dxadata %>% # take the dxadata data set
                      excl_female = "Ekskludert",
                      incl_male = "Inkludert", 
                      excl_male = "Ekskludert") %>%
-    # Adds a header specified for all columns of the table
+    
     add_header_row(values = c("", "Kvinner", "Kvinner", "Menn", "Menn")) %>%
     
-    # Merge the new cells with the same data
-    # part = "header" meands that we want to add a row in the "header" part of the table.
-    # i = 1 means row 1
-    # j = 2:3 means column 2 to 3
+    
     merge_at(part = "header", i = 1, j = 2:3) %>%
     merge_at(part = "header", i = 1, j = 4:5) %>%
-    # Add footnote
+  
     add_footer_row(values = "Verdier er Gjennomsnitt og standard avvik", colwidths = 5) %>%
-    # Make the columns widths match the content
+  
     autofit()
 ```
