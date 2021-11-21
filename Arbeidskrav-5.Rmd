@@ -17,7 +17,78 @@ Styrketrening har en viktig rolle i samfunnet, og er anerkjent som en god metode
 
 Treningsvolum er en av disse variablene som bygger opp et treningsprogram.
 
+## Metode
+
+
 ```{r}
+library(tidyverse)
+library(exscidata)
+library(knitr)
+library(kableExtra)
+library(flextable)
+dxadata %>% # take the dxadata data set
+  select(participant, time, sex, include:weight, fat.whole) %>% 
+  # select participant, time, sex, include to height and fat.whole
+  
+  # Filter to keep all observations with pre
+  filter(time == "pre") %>%
+  
+  # Calculate body fat
+  # fat.whole in grams, needs to be divided by 1000 to express as kg
+  # Multiply by 100 to get percentage
+  mutate(fat.whole = ((fat.whole/1000) / weight) * 100) %>%
+  
+  # Group the data frame and add a variable specifying the number of observations per group
+  group_by(include, sex) %>%
+  mutate(n = n()) %>%
+  # Collect all variables for convenient summarizing
+  pivot_longer(names_to = "variable", 
+               values_to = "value", 
+               cols = age:n) %>%
+  # Create a new grouping, adding variable
+  group_by(include, sex, variable) %>%
+  # Summarize in two new variables m for mean and s for SD
+  summarise(m = mean(value), 
+            s = sd(value)) %>%
+  # Add descriptive statistics together for nice formatting
+  mutate(ms = if_else(variable == "n", # If the variable is n
+                      as.character(m), # the only display the mean, otherwise:
+                        paste0(signif(m, 3), # Use signif to round to significant numbers
+                        " (",
+                        signif(s, 3), 
+                        ")")), 
+         # Doing a new grouping variable
+         include_sex = paste(include, sex, sep = "_")) %>%
+  # removing unnecessary variables after ungrouping
+  ungroup() %>%
 
+  select(-sex, -include, -m, -s) %>%
+  # pivot wider to match the desired data
+  pivot_wider(names_from = include_sex, 
+              values_from = ms) %>%
+    mutate(variable = factor(variable, levels = c("n", "age", "weight", "height", "fat.whole"), 
+                           labels = c("N", "Alder (år)", "Kroppsvekt (kg)", 
+                                      "Høyde (cm)", "Kroppsfett (%)"))) %>%
+  select(variable, incl_female, excl_female, incl_male, excl_male) %>%
+  arrange(variable) %>%
+   flextable()  %>%
 
+   set_header_labels(variable = "",
+                    incl_female = "Inkludert", 
+                     excl_female = "Ekskludert",
+                     incl_male = "Inkludert", 
+                     excl_male = "Ekskludert") %>%
+    # Adds a header specified for all columns of the table
+    add_header_row(values = c("", "Kvinner", "Kvinner", "Menn", "Menn")) %>%
+    
+    # Merge the new cells with the same data
+    # part = "header" meands that we want to add a row in the "header" part of the table.
+    # i = 1 means row 1
+    # j = 2:3 means column 2 to 3
+    merge_at(part = "header", i = 1, j = 2:3) %>%
+    merge_at(part = "header", i = 1, j = 4:5) %>%
+    # Add footnote
+    add_footer_row(values = "Verdier er Gjennomsnitt og standard avvik", colwidths = 5) %>%
+    # Make the columns widths match the content
+    autofit()
 ```
