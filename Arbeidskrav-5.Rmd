@@ -1,0 +1,23 @@
+---
+title: "arbeidskrav 5"
+author: "Hermann moen"
+date: "21 11 2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+  bibliography: referanser.bib
+bibliography: references.bib
+---
+
+## Høyere treningsvolum leder til bedre styke og muskelvekst i underekstremiteter hos voksne mosjonister
+
+## Introduksjon
+
+Styrketrening har en viktig rolle i samfunnet, og er anerkjent som en god metode til å forbedre muskelstyrke, evnen til kraftproduksjon, skape muskelhypertrofi, samt forbedre en rekke helsemarkører [@kraemer2002]. Derfor er kunnskap om hvordan man best tilrettelegger styrketrening for å opnå de ønskede adaptasjonene viktig. Styrketrening består av en rekke variabler som kan manipuleres ut ifra behov og gi ønsket adaptasjon [@kraemer2004; @bird2005]. Disse variablene som kan påvirke adaptasjoner er volum, frekvens, pauselengde, øvelsesutvalg, og øvelsesrekkefølge [@American2009].
+
+Treningsvolum er en av disse variablene som bygger opp et treningsprogram.
+
+```{r}
+
+
+```
