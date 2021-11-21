@@ -2,23 +2,28 @@
 title: "arbeidskrav 5"
 author: "Hermann moen"
 date: "21 11 2021"
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
   bibliography: referanser.bib
 bibliography: references.bib
 ---
 
-## Høyere treningsvolum leder til bedre styke og muskelvekst i underekstremiteter hos voksne mosjonister
+## Høyere treningsvolum leder til bedre styke og muskelvekst i underekstremiteter hos utrente
 
 ## Introduksjon
 
 Styrketrening har en viktig rolle i samfunnet, og er anerkjent som en god metode til å forbedre muskelstyrke, evnen til kraftproduksjon, skape muskelhypertrofi, samt forbedre en rekke helsemarkører [@kraemer2002]. Derfor er kunnskap om hvordan man best tilrettelegger styrketrening for å opnå de ønskede adaptasjonene viktig. Styrketrening består av en rekke variabler som kan manipuleres ut ifra behov og gi ønsket adaptasjon [@kraemer2004; @bird2005]. Disse variablene som kan påvirke adaptasjoner er volum, frekvens, pauselengde, øvelsesutvalg, og øvelsesrekkefølge [@American2009].
 
-Treningsvolum er en av disse variablene som bygger opp et treningsprogram.
+Treningsvolum og den tilknyttede dose-reponsen er således interesant for å øke effektiviteten av trening. De akutte responsene på forskjllige treningsvolum er undersøkt, og myofibrililær muskelproteinsyntesen ble signifikant økt når deltakere gjennomførte 3set på 70% av 1rm, vs 1 sett målt 5 og 29 timer etter trening [@burd2010].
 
 ## Metode
 
+## Deltakere
+
+Deltakerne i denne studien bestod av ikke røykende kvinner og menn mellom 18 og 40år. Deltakeren kunne ikke ha trent styrke oftere enn en gang per uke de siste 12 månedene, være inntolerante til lokalbeøvelse, ha en skade som påvirket muskelstyrke negativt, eller ta reseptbelagte legemidler som kan påvirke adaptasjonene til treningen. 7 deltakere som startet på studien kunne ikke gjennomføre tilstrekkelig, og ble ekskludert se tabel 1.
 
 ```{r}
 library(tidyverse)
