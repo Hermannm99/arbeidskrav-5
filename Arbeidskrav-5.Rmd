@@ -3,8 +3,8 @@ title: "arbeidskrav 5"
 author: "Hermann moen"
 date: "21 11 2021"
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
   html_document: default
 editor_options:
   chunk_output_type: console
@@ -34,7 +34,7 @@ All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt
 All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: https://github.com/Hermannm99/arbeidskrav-5 
 
 
-```{r}
+```{recho=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide"}}
 library(tidyverse)
 library(exscidata)
 library(knitr)
@@ -134,3 +134,25 @@ plot(m0)
 
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE, results="hide"}
+styrkedata <- strengthvolume %>%
+  filter(!is.na(load)) %>%
+  group_by(exercise) %>%
+  mutate(scaled.load = load / max(load, na.rm = TRUE)) %>%
+  group_by(participant, time, sex, sets) %>%
+  summarise(combined.load = mean(scaled.load, na.rm = TRUE)) %>%
+  ungroup() %>%
+  
+  
+  pivot_wider(names_from = time,
+              values_from = combined.load) %>%
+  mutate(prosentvis.endring = ((post - pre) / pre) * 100) 
+styrkedata %>%    
+  filter(!is.na(post)) %>%
+  group_by(sets) %>%
+  summarise(m = mean(prosentvis.endring),
+            sd = sd(prosentvis.endring)) 
+s0 <- lm(post ~ pre + sex + sets, data = styrkedata)
+summary(s0)
+plot(s0)
+```
