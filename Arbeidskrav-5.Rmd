@@ -29,12 +29,17 @@ Deltakerne i denne studien bestod av ikke røykende kvinner og menn mellom 18 og
 I denne studiene ble deltakerne testet i pre og post for styrke, og forskjllige mål på muskelvekst.Testene for styrke var isokinetsik og isometrisk unilateral kneekstensjon, og unilateral beinpress. Målene for muskelvekst var tversnittsareal av vastus lateralis, medialis, intermedius, og rectus femoris målt med MRI, og måling av kroppsmassesammensetning gjort med DEXA-scan.
 
 ## Databehandling
-All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt(standard avvik). 
+All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt(standard avvik). P-verdien er beregnet gjjenom en ANCOVA modell på endringen fra pre til post i de to gruppene. All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: https://github.com/Hermannm99/arbeidskrav-5 
 
-All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: https://github.com/Hermannm99/arbeidskrav-5 
+## Treningsprotokoll
+Treningsintervensjonen varte i 12 uker, og bestod av 2-3 ukentlige treningsøkter. Øktene var fullkropss styrkeøkter, der man gjennomførte ett sett på det ene beinet og flere sett på det andre beinet, samt alternerende overkroppsøvelser. Før øktene ble det gjennomført en standardisert oppvarming bestående av armhevinger, sit-ups, rygghev, og knebøy med kroppsvekt, sant 1 sett med 50% av 1RM for hver øvelse. 
+
+Underkroppsøvelsene ble gjennomført i følgende rekkefølge: unilateral beinpress, kneekstensjon, og knefleksjon. Etter underksroppsøvelsene ble det gjort bilateral benkpress, nedtrekk, og enten skulderpress eller sittende roing(alternerende annenhver økt). Pauselengde var satt til å være mellom 90 og 180 sekunder. Det var 3 ukentlige økter. Intensiteten ble gradvis økt underveis i treningsintervensjon, 10RM uke 1-2, 8RM uke 3-5, og 7RM for de siste 7 ukene. 91%(10%) av treningsøktene ble gjennomført under oppsyn av forskningsmedarbeider, men de ble også bedt om å føre detaljert treningslogg for å ha full kontroll. Fra den 9ende treningsøkta ble det innført en økt med redusert belastning hver uke, som bestod av 90% av belastningen på den foregående treningsøkta, men med samme repetisjonsantall. Øktene ed maksimal innsats ble holdt med minst 48timers mellomrom, og de øktene med redusert intensitet ble holdt med inst 24 timers avstand fra de andre øktene
+
+## Testprotokoll 
 
 
-```{recho=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide"}}
+```{recho=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide"}
 library(tidyverse)
 library(exscidata)
 library(knitr)
