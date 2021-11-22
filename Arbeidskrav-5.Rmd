@@ -18,9 +18,7 @@ bibliography: references.bib
 
 Styrketrening har en viktig rolle i samfunnet, og er anerkjent som en god metode til å forbedre muskelstyrke, evnen til kraftproduksjon, skape muskelhypertrofi, samt forbedre en rekke helsemarkører [@kraemer2002]. Derfor er kunnskap om hvordan man best tilrettelegger styrketrening for å opnå de ønskede adaptasjonene viktig. Styrketrening består av en rekke variabler som kan manipuleres ut ifra behov og gi ønsket adaptasjon [@kraemer2004; @bird2005]. Disse variablene som kan påvirke adaptasjoner er volum, frekvens, pauselengde, øvelsesutvalg, og øvelsesrekkefølge [@American2009].
 
-Treningsvolum og den tilknyttede dose-reponsen er således interesant for å øke effektiviteten av trening. De akutte responsene på forskjllige treningsvolum er undersøkt, og myofibrililær muskelproteinsyntesen ble signifikant økt når deltakere gjennomførte 3set på 70% av 1rm, vs 1 sett målt 5 og 29 timer etter trening [@burd2010].
-
-## Metode
+Treningsvolum og den tilknyttede dose-reponsen er således interesant for å øke effektiviteten av trening. De akutte responsene på forskjllige treningsvolum er undersøkt, og myofibrililær muskelproteinsyntesen ble signifikant økt når deltakere gjennomførte 3set på 70% av 1rm, vs 1 sett målt 5 og 29 timer etter trening [@burd2010]. Når det kommer til lengere varende intervensjonsstudier er det konflikt relatert til treningsvolumets påvirkning. Noen studier har vist signifikant bedre tilpassninger til høyere volum enn lavere volum [@rønnestad2007;@starkey1996;@radaelli2015 ]. Andre studier har vist at det ikke skiller seg i tilpassninger til styrketrening med forskjellig volum[@bottaro2011; @galvã£o2005;@mcbride2003]. Treningssadaptasjoner er avhengig av en rekke biologiske variabler. Målet med denne studien er å fjerne så mye biologisk påvirkning som mulig og undersøke effekten av volumet alene så godt som mulig.
 
 ## Deltakere og studieoversikt
 
@@ -29,17 +27,18 @@ Deltakerne i denne studien bestod av ikke røykende kvinner og menn mellom 18 og
 I denne studiene ble deltakerne testet i pre og post for styrke, og forskjllige mål på muskelvekst.Testene for styrke var isokinetsik og isometrisk unilateral kneekstensjon, og unilateral beinpress. Målene for muskelvekst var tversnittsareal av vastus lateralis, medialis, intermedius, og rectus femoris målt med MRI, og måling av kroppsmassesammensetning gjort med DEXA-scan.
 
 ## Databehandling
-All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt(standard avvik). P-verdien er beregnet gjjenom en ANCOVA modell på endringen fra pre til post i de to gruppene. All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: https://github.com/Hermannm99/arbeidskrav-5 
+
+All deskriptiv data er presntert som gjennomsnitt og Standard avvik gjennomsnitt(standard avvik). P-verdien er beregnet gjjenom en ANCOVA modell på endringen fra pre til post i de to gruppene. All databehandling er gjort i Rstudio, og lagret i en github repository, og kan hentes frem her: <https://github.com/Hermannm99/arbeidskrav-5>
 
 ## Treningsprotokoll
-Treningsintervensjonen varte i 12 uker, og bestod av 2-3 ukentlige treningsøkter. Øktene var fullkropss styrkeøkter, der man gjennomførte ett sett på det ene beinet og flere sett på det andre beinet, samt alternerende overkroppsøvelser. Før øktene ble det gjennomført en standardisert oppvarming bestående av armhevinger, sit-ups, rygghev, og knebøy med kroppsvekt, sant 1 sett med 50% av 1RM for hver øvelse. 
+
+Treningsintervensjonen varte i 12 uker, og bestod av 2-3 ukentlige treningsøkter. Øktene var fullkropss styrkeøkter, der man gjennomførte ett sett på det ene beinet og flere sett på det andre beinet, samt alternerende overkroppsøvelser. Før øktene ble det gjennomført en standardisert oppvarming bestående av armhevinger, sit-ups, rygghev, og knebøy med kroppsvekt, sant 1 sett med 50% av 1RM for hver øvelse.
 
 Underkroppsøvelsene ble gjennomført i følgende rekkefølge: unilateral beinpress, kneekstensjon, og knefleksjon. Etter underksroppsøvelsene ble det gjort bilateral benkpress, nedtrekk, og enten skulderpress eller sittende roing(alternerende annenhver økt). Pauselengde var satt til å være mellom 90 og 180 sekunder. Det var 3 ukentlige økter. Intensiteten ble gradvis økt underveis i treningsintervensjon, 10RM uke 1-2, 8RM uke 3-5, og 7RM for de siste 7 ukene. 91%(10%) av treningsøktene ble gjennomført under oppsyn av forskningsmedarbeider, men de ble også bedt om å føre detaljert treningslogg for å ha full kontroll. Fra den 9ende treningsøkta ble det innført en økt med redusert belastning hver uke, som bestod av 90% av belastningen på den foregående treningsøkta, men med samme repetisjonsantall. Øktene ed maksimal innsats ble holdt med minst 48timers mellomrom, og de øktene med redusert intensitet ble holdt med inst 24 timers avstand fra de andre øktene
 
-## Testprotokoll 
+## Testprotokoll
 
-
-```{recho=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide"}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide"}
 library(tidyverse)
 library(exscidata)
 library(knitr)
@@ -104,7 +103,10 @@ dxadata %>%
     autofit()
 ```
 
-## Resultater 
+## Resultater
+
+sliter med å få disse figurene inn i PDF, og vurderer flere tester på datasettene.
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE, results="hide"}
 library(tidyverse)
 dat <- dxadata %>%
@@ -161,3 +163,7 @@ s0 <- lm(post ~ pre + sex + sets, data = styrkedata)
 summary(s0)
 plot(s0)
 ```
+
+## Diskusjon
+
+Har ikke fått ut all data som er planlagt, klarer heller ikke beskrive helt sikkert hva testene som er kjørt viser, så dermed er det vrient å diskutere.
