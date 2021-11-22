@@ -98,3 +98,39 @@ dxadata %>%
   
     autofit()
 ```
+
+## Resultater 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE, results="hide"}
+library(tidyverse)
+dat <- dxadata %>%
+  select(participant:include, lean.left_leg, lean.right_leg) %>%
+  pivot_longer(names_to = "leg", 
+               values_to = "lean.mass", 
+               cols = lean.left_leg:lean.right_leg) %>%
+  mutate(leg = if_else(leg == "lean.left_leg", "L", "R"), 
+         sets = if_else(multiple == leg, "multiple", "single")) %>%
+  select(participant, time, sets, sex, leg, lean.mass) %>%
+  
+  pivot_wider(names_from = time,
+              values_from = lean.mass) %>%
+  mutate(lbm.change = post - pre) %>%
+  mutate(pre.mc = pre - mean(pre)) %>% 
+  mutate(prosentvis.endring = ((post - pre) / pre) * 100) %>%
+  filter(!is.na(lbm.change)) 
+  
+  
+  
+dat %>%   
+  group_by(sets) %>%
+  summarise(m = mean(prosentvis.endring),
+            sd = sd(prosentvis.endring)) 
+library(lme4)
+library(lmerTest)
+m0 <- lm(post ~ pre + sex + sets, data = dat)
+summary(m0)
+plot(m0)
+
+
+
+```
+
