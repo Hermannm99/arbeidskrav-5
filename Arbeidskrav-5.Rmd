@@ -3,12 +3,11 @@ title: "arbeidskrav 5"
 author: "Hermann moen"
 date: "21 11 2021"
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 editor_options:
   chunk_output_type: console
-  bibliography: referanser.bib
 bibliography: references.bib
 ---
 
@@ -107,6 +106,22 @@ dxadata %>%
 
 sliter med å få disse figurene inn i PDF, og vurderer flere tester på datasettene.
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE, results="hide", fig.cap = "Figur 1 viser økningen i muskelvekst fra pre- post for alle forsøkspersoner skildt ved single- sett og multiple- sett"}
+Endringscore_dxa_fig <- dxadata %>%  # Jsutere tabell for å gjøre utregning på variabler.
+  select(participant:include, lean.left_leg, lean.right_leg) %>%
+  pivot_longer(names_to = "leg", 
+               values_to = "lean.mass", 
+               cols = lean.left_leg:lean.right_leg) %>%
+   mutate(leg = if_else(leg == "lean.left_leg", "L", "R"), 
+         sets = if_else(multiple == leg, "multiple", "single")) %>%
+  select(participant, time, sets, sex, leg, lean.mass) %>%
+  group_by(participant) %>%
+  mutate(n = n(), group = factor(sets, levels = c("single", "multiple")), time = factor(time, levels = c("pre", "post")))
+Endringscore_dxa_fig %>%   # Lager figur på pre-post for hvert bein(treningsprotokoll)
+ ggplot(aes(time, lean.mass, group = paste(participant, group), color = group)) + geom_line() + theme_minimal()%>%
+print()
+```
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE, results="hide"}
 library(tidyverse)
 dat <- dxadata %>%
@@ -142,6 +157,7 @@ plot(m0)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE, results="hide"}
+
 styrkedata <- strengthvolume %>%
   filter(!is.na(load)) %>%
   group_by(exercise) %>%
